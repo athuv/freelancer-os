@@ -1,4 +1,5 @@
 import Sidebar from '@/app/components/Sidebar';
+import StatsCards from '@/app/components/StatsCards';
 import Topbar from '@/app/components/Topbar';
 
 const page = () => {
@@ -7,7 +8,9 @@ const page = () => {
       <Sidebar />
       <main className="flex h-screen flex-1 flex-col">
         <Topbar />
-        <div className="flex-1">main</div>
+        <div className="flex-1 p-6">
+          <StatsCards />
+        </div>
         <footer className="border-t text-center">Footer </footer>
       </main>
     </div>
