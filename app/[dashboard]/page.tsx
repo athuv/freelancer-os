@@ -1,17 +1,25 @@
+import RecentProjectsWidget from '@/app/components/RecentProjectsWidget';
 import Sidebar from '@/app/components/Sidebar';
 import StatsCards from '@/app/components/StatsCards';
 import Topbar from '@/app/components/Topbar';
 
 const page = () => {
   return (
-    <div className="flex h-full">
+    <div className="flex h-screen">
       <Sidebar />
-      <main className="flex h-screen flex-1 flex-col">
+      <main className="flex flex-1 flex-col">
         <Topbar />
-        <div className="flex-1 p-6">
-          <StatsCards />
+
+        <div className="flex flex-1 flex-col">
+          <div className="flex-1 space-y-6 p-6">
+            <StatsCards />
+            <RecentProjectsWidget />
+          </div>
+
+          <footer className="text-muted-foreground border-t p-4 text-center text-sm">
+            Footer
+          </footer>
         </div>
-        <footer className="border-t text-center">Footer </footer>
       </main>
     </div>
   );
