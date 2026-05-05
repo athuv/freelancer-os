@@ -1,4 +1,5 @@
 import ProjectItem from '@/app/components/ProjectItemCard';
+import { Button } from '@/app/components/shadcn/button';
 import {
   Card,
   CardContent,
@@ -22,8 +23,11 @@ const projects = [
 const RecentProjectsWidget = () => {
   return (
     <Card className="rounded-2xl">
-      <CardHeader>
+      <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Recent Projects</CardTitle>
+        <Button variant="ghost" size="sm">
+          View All
+        </Button>
       </CardHeader>
 
       <CardContent>
