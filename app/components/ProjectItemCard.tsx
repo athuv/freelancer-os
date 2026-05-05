@@ -12,6 +12,17 @@ type ProjectItemProps = {
   status: string;
 };
 
+function getStatusVariant(status: string) {
+  switch (status) {
+    case 'Completed':
+      return 'default';
+    case 'In Progress':
+      return 'secondary';
+    default:
+      return 'outline';
+  }
+}
+
 const ProjectItemCard = ({ name, client, status }: ProjectItemProps) => {
   return (
     <Card className="rounded-2xl">
@@ -25,7 +36,7 @@ const ProjectItemCard = ({ name, client, status }: ProjectItemProps) => {
             <p className="text-muted-foreground text-sm">{client}</p>
           </div>
 
-          <Badge variant="secondary">{status}</Badge>
+          <Badge variant={getStatusVariant(status)}>{status}</Badge>
         </div>
       </CardContent>
     </Card>
