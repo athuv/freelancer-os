@@ -31,11 +31,19 @@ const RecentProjectsWidget = () => {
       </CardHeader>
 
       <CardContent>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {projects.map((project, i) => (
-            <ProjectItem key={i} {...project} />
-          ))}
-        </div>
+        <CardContent>
+          {projects.length === 0 ? (
+            <div className="text-muted-foreground flex h-40 items-center justify-center">
+              No projects yet
+            </div>
+          ) : (
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {projects.map((project, i) => (
+                <ProjectItem key={i} {...project} />
+              ))}
+            </div>
+          )}
+        </CardContent>
       </CardContent>
     </Card>
   );
