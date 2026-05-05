@@ -5,7 +5,7 @@ import Topbar from '@/app/components/Topbar';
 
 const page = () => {
   return (
-    <div className="flex h-screen">
+    <div className="flex min-h-screen">
       <Sidebar />
       <main className="flex flex-1 flex-col">
         <Topbar />
