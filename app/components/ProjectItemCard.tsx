@@ -20,7 +20,7 @@ const ProjectItemCard = ({ name, client, status }: ProjectItemProps) => {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <div className="flex items-center justify-between border-b pb-3 last:border-none">
+        <div className="hover:bg-muted/50 flex items-center justify-between rounded-lg border-b px-2 py-2 pb-3 transition last:border-none">
           <div>
             <p className="text-muted-foreground text-sm">{client}</p>
           </div>
