@@ -5,6 +5,7 @@ export type Project = {
   name: string;
   client: string;
   status: ProjectStatus;
+  tasks: Task[];
 };
 
 export type Task = {
