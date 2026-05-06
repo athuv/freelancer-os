@@ -30,11 +30,9 @@ export default function ProjectsList() {
 
       <CardContent className="space-y-4">
         {projects.length === 0 ? (
-          <Card>
-            <CardContent className="text-muted-foreground flex h-40 items-center justify-center">
-              No projects yet
-            </CardContent>
-          </Card>
+          <div className="text-muted-foreground flex h-40 items-center justify-center">
+            No projects yet
+          </div>
         ) : (
           projects.map((project) => (
             <ProjectRow key={project.id} project={project} />
