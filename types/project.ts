@@ -1,0 +1,8 @@
+export type ProjectStatus = 'Completed' | 'In Progress' | 'Planned';
+
+export type Project = {
+  id: string;
+  name: string;
+  client: string;
+  status: ProjectStatus;
+};

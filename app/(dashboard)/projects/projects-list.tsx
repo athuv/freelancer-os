@@ -5,8 +5,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/app/components/shadcn/card';
+import { Project } from '@/types/project';
 
-const projects = [
+const projects: Project[] = [
   {
     id: '1',
     name: 'Portfolio Website',
