@@ -1,4 +1,4 @@
-import StatCard from '@/app/components/StatCard';
+import StatCard from '@/app/components/stat-card';
 import { Users, FolderKanban, DollarSign, AlertCircle } from 'lucide-react';
 
 const StatsCards = () => {

@@ -1,4 +1,4 @@
-import ProjectItem from '@/app/components/ProjectItemCard';
+import ProjectItem from '@/app/components/project-item-card';
 import { Button } from '@/app/components/shadcn/button';
 import {
   Card,
