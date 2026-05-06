@@ -5,22 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/app/components/shadcn/card';
-import { Project } from '@/types/project';
-
-const projects: Project[] = [
-  {
-    id: '1',
-    name: 'Portfolio Website',
-    client: 'John Doe',
-    status: 'In Progress',
-  },
-  {
-    id: '2',
-    name: 'E-commerce App',
-    client: 'Acme Inc',
-    status: 'Completed',
-  },
-];
+import { projects } from '@/data/mock-projects';
 
 export default function ProjectsList() {
   return (
