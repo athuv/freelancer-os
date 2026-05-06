@@ -23,7 +23,11 @@ function getStatusVariant(status: string) {
   }
 }
 
-const ProjectItemCard = ({ name, client, status }: ProjectItemProps) => {
+export default function ProjectItemCard({
+  name,
+  client,
+  status,
+}: ProjectItemProps) {
   return (
     <Card className="rounded-2xl">
       <CardHeader>
@@ -41,6 +45,4 @@ const ProjectItemCard = ({ name, client, status }: ProjectItemProps) => {
       </CardContent>
     </Card>
   );
-};
-
-export default ProjectItemCard;
+}

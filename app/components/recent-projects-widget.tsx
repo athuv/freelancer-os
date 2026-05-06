@@ -20,7 +20,7 @@ const projects = [
   },
 ];
 
-const RecentProjectsWidget = () => {
+export default function RecentProjectsWidget() {
   return (
     <Card className="rounded-2xl">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -47,6 +47,4 @@ const RecentProjectsWidget = () => {
       </CardContent>
     </Card>
   );
-};
-
-export default RecentProjectsWidget;
+}

@@ -1,4 +1,4 @@
-const Sidebar = () => {
+export default function Sidebar() {
   return (
     <section className="w-60 border-r p-4">
       <h2 className="mb-6 text-lg font-semibold">FreelancerOS</h2>
@@ -11,6 +11,4 @@ const Sidebar = () => {
       </nav>
     </section>
   );
-};
-
-export default Sidebar;
+}

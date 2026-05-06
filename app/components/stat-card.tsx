@@ -11,7 +11,7 @@ type StatCardProps = {
   icon: React.ReactNode;
 };
 
-const StatCard = ({ title, value, icon }: StatCardProps) => {
+export default function StatCard({ title, value, icon }: StatCardProps) {
   return (
     <Card className="rounded-2xl">
       <CardHeader className="pb-2">
@@ -26,6 +26,4 @@ const StatCard = ({ title, value, icon }: StatCardProps) => {
       </CardContent>
     </Card>
   );
-};
-
-export default StatCard;
+}

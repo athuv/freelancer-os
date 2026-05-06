@@ -1,7 +1,7 @@
 import StatCard from '@/app/components/stat-card';
 import { Users, FolderKanban, DollarSign, AlertCircle } from 'lucide-react';
 
-const StatsCards = () => {
+export default function StatsCards() {
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       <StatCard title="Total Clients" value="12" icon={<Users size={16} />} />
@@ -22,6 +22,4 @@ const StatsCards = () => {
       />
     </div>
   );
-};
-
-export default StatsCards;
+}
