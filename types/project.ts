@@ -6,3 +6,9 @@ export type Project = {
   client: string;
   status: ProjectStatus;
 };
+
+export type Task = {
+  id: string;
+  title: string;
+  done: boolean;
+};
