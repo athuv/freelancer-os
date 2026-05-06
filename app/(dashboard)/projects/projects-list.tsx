@@ -29,9 +29,17 @@ export default function ProjectsList() {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {projects.map((project) => (
-          <ProjectRow key={project.id} project={project} />
-        ))}
+        {projects.length === 0 ? (
+          <Card>
+            <CardContent className="text-muted-foreground flex h-40 items-center justify-center">
+              No projects yet
+            </CardContent>
+          </Card>
+        ) : (
+          projects.map((project) => (
+            <ProjectRow key={project.id} project={project} />
+          ))
+        )}
       </CardContent>
     </Card>
   );
