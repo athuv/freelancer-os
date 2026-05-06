@@ -3,7 +3,7 @@ import Sidebar from '@/app/components/Sidebar';
 import StatsCards from '@/app/components/StatsCards';
 import Topbar from '@/app/components/Topbar';
 
-const page = () => {
+export default function DashboardPage() {
   return (
     <div className="flex min-h-screen">
       <Sidebar />
@@ -22,6 +22,4 @@ const page = () => {
       </main>
     </div>
   );
-};
-
-export default page;
+}
