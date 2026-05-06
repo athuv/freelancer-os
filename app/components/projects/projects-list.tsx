@@ -1,4 +1,4 @@
-import ProjectRow from '@/app/(dashboard)/projects/project-row';
+import ProjectRow from '@/app/components/projects/project-row';
 import {
   Card,
   CardContent,

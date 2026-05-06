@@ -1,5 +1,5 @@
-import ProjectsHeader from '@/app/(dashboard)/projects/projects-header';
-import ProjectsList from '@/app/(dashboard)/projects/projects-list';
+import ProjectsHeader from '@/app/components/projects/projects-header';
+import ProjectsList from '@/app/components/projects/projects-list';
 
 export default function ProjectsPage() {
   return (
