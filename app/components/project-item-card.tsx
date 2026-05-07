@@ -5,12 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/app/components/shadcn/card';
-
-type ProjectItemProps = {
-  name: string;
-  client: string;
-  status: string;
-};
+import { Project } from '@/types/project';
 
 function getStatusVariant(status: string) {
   switch (status) {
@@ -23,11 +18,7 @@ function getStatusVariant(status: string) {
   }
 }
 
-export default function ProjectItemCard({
-  name,
-  client,
-  status,
-}: ProjectItemProps) {
+export default function ProjectItemCard({ name, client, status }: Project) {
   return (
     <Card className="rounded-2xl">
       <CardHeader>
