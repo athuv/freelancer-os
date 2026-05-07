@@ -1,50 +1,36 @@
-import ProjectItem from '@/app/components/project-item-card';
-import { Button } from '@/app/components/shadcn/button';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/app/components/shadcn/card';
-
-const projects = [
-  {
-    name: 'Portfolio Website',
-    client: 'John Doe',
-    status: 'In Progress',
-  },
-  {
-    name: 'E-commerce App',
-    client: 'Acme Inc',
-    status: 'Completed',
-  },
-];
+import Link from 'next/link';
+import { Badge } from '@/app/components/shadcn/badge';
+import { projects } from '@/data/mock-projects';
+import { getStatusVariant } from '@/lib/utils/project-status';
 
 export default function RecentProjectsWidget() {
   return (
-    <Card className="rounded-2xl">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>Recent Projects</CardTitle>
-        <Button variant="ghost" size="sm">
-          View All
-        </Button>
-      </CardHeader>
+    <div className="space-y-3">
+      {projects.slice(0, 3).map((project) => (
+        <Link
+          key={project.id}
+          href={`/projects/${project.id}`}
+          className="hover:bg-muted/50 flex items-center justify-between rounded-xl border px-3 py-3 transition"
+        >
+          <div>
+            <p className="font-medium">{project.name}</p>
+            <p className="text-muted-foreground text-sm">{project.client}</p>
+          </div>
 
-      <CardContent>
-        <CardContent>
-          {projects.length === 0 ? (
-            <div className="text-muted-foreground flex h-40 items-center justify-center">
-              No projects yet
-            </div>
-          ) : (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {projects.map((project, i) => (
-                <ProjectItem key={i} {...project} />
-              ))}
-            </div>
-          )}
-        </CardContent>
-      </CardContent>
-    </Card>
+          <Badge variant={getStatusVariant(project.status)}>
+            {project.status}
+          </Badge>
+        </Link>
+      ))}
+
+      <div className="pt-2">
+        <Link
+          href="/projects"
+          className="text-muted-foreground hover:text-foreground text-sm transition"
+        >
+          View all projects →
+        </Link>
+      </div>
+    </div>
   );
 }
