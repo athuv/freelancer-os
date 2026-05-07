@@ -5,18 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/app/components/shadcn/card';
+import { getStatusVariant } from '@/lib/utils/project-status';
 import { Project } from '@/types/project';
-
-function getStatusVariant(status: string) {
-  switch (status) {
-    case 'Completed':
-      return 'default';
-    case 'In Progress':
-      return 'secondary';
-    default:
-      return 'outline';
-  }
-}
 
 export default function ProjectItemCard({ name, client, status }: Project) {
   return (

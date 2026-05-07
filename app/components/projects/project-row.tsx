@@ -1,16 +1,6 @@
 import { Badge } from '@/app/components/shadcn/badge';
+import { getStatusVariant } from '@/lib/utils/project-status';
 import { Project, ProjectStatus } from '@/types/project';
-
-function getStatusVariant(status: ProjectStatus) {
-  switch (status) {
-    case 'Completed':
-      return 'default';
-    case 'In Progress':
-      return 'secondary';
-    default:
-      return 'outline';
-  }
-}
 
 export default function ProjectRow({ project }: { project: Project }) {
   return (
