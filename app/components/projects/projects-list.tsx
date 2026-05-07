@@ -5,7 +5,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/app/components/shadcn/card';
+import EmptyState from '@/app/components/shared/empty-state';
 import { projects } from '@/data/mock-projects';
+import { FolderOpen } from 'lucide-react';
 
 export default function ProjectsList() {
   return (
@@ -16,9 +18,11 @@ export default function ProjectsList() {
 
       <CardContent className="space-y-4">
         {projects.length === 0 ? (
-          <div className="text-muted-foreground flex h-40 items-center justify-center">
-            No projects yet
-          </div>
+          <EmptyState
+            icon={<FolderOpen className="size-10" />}
+            title="No projects yet"
+            description="Create your first project to start tracking your work."
+          />
         ) : (
           projects.map((project) => (
             <ProjectRow key={project.id} project={project} />

@@ -5,8 +5,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/app/components/shadcn/card';
+import EmptyState from '@/app/components/shared/empty-state';
 
 import { Task } from '@/types/project';
+import { CheckCircle2 } from 'lucide-react';
 
 export default function ProjectTasks({ tasks }: { tasks: Task[] }) {
   return (
@@ -17,9 +19,11 @@ export default function ProjectTasks({ tasks }: { tasks: Task[] }) {
 
       <CardContent className="space-y-3">
         {tasks.length === 0 ? (
-          <div className="text-muted-foreground flex h-24 items-center justify-center text-sm">
-            No tasks yet
-          </div>
+          <EmptyState
+            icon={<CheckCircle2 className="size-10" />}
+            title="No tasks yet"
+            description="Tasks for this project will appear here."
+          />
         ) : (
           tasks.map((task) => <TaskItem key={task.id} task={task} />)
         )}
