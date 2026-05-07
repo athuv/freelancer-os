@@ -16,7 +16,7 @@ export default function ProjectsList() {
         <CardTitle>All Projects</CardTitle>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className="flex flex-col gap-3">
         {projects.length === 0 ? (
           <EmptyState
             icon={<FolderOpen className="size-10" />}
