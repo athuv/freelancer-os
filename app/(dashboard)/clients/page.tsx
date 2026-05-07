@@ -8,7 +8,7 @@ export default function ClientsPage() {
     <div className="space-y-6">
       <h1 className="text-2xl font-semibold tracking-tight">Clients</h1>
 
-      <div className="space-y-3">
+      <div className="flex flex-col gap-3">
         {clients.length === 0 ? (
           <EmptyState
             icon={<Users className="size-10" />}
