@@ -1,4 +1,5 @@
 import ProjectHeader from '@/app/components/projects/project-header';
+import ProjectTasks from '@/app/components/projects/project-tasks';
 import { projects } from '@/data/mock-projects';
 import { notFound } from 'next/navigation';
 
@@ -16,6 +17,7 @@ export default async function ProjectDetailPage({
   return (
     <div className="space-y-6">
       <ProjectHeader project={project} />
+      <ProjectTasks tasks={project.tasks} />
     </div>
   );
 }
