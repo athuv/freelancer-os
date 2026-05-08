@@ -1,4 +1,4 @@
-import StatCard from '@/app/components/stat-card';
+import StatCard from '@/app/components/dashboard/stat-card';
 import { Users, FolderKanban, DollarSign, AlertCircle } from 'lucide-react';
 
 export default function StatsCards() {
