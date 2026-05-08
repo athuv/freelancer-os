@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 
 import { clients } from '@/data/mock-clients';
 import { projects } from '@/data/mock-projects';
+import PageContainer from '@/app/components/layout/page-container';
 
 export default async function ClientDetailPage({
   params,
@@ -16,7 +17,7 @@ export default async function ClientDetailPage({
   const clientProjects = projects.filter((p) => p.client === client.name);
 
   return (
-    <div className="space-y-8">
+    <PageContainer>
       <div>
         <h1 className="text-2xl font-semibold">{client.name}</h1>
 
@@ -59,6 +60,6 @@ export default async function ClientDetailPage({
           ))
         )}
       </div>
-    </div>
+    </PageContainer>
   );
 }
