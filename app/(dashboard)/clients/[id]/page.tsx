@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { projects } from '@/data/mock-projects';
 import PageContainer from '@/app/components/layout/page-container';
 import { getClientById } from '@/lib/data/clients';
+import { assertExists } from '@/lib/utils/handle-not-found';
 
 export default async function ClientDetailPage({
   params,
@@ -11,7 +12,7 @@ export default async function ClientDetailPage({
   const { id } = await params;
   const client = getClientById(id);
 
-  if (!client) return notFound();
+  assertExists(client);
 
   const clientProjects = projects.filter((p) => p.client === client.name);
 
