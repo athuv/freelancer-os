@@ -9,8 +9,8 @@ import EmptyState from '@/app/components/shared/empty-state';
 import { getProjects } from '@/lib/data/projects';
 import { FolderOpen } from 'lucide-react';
 
-export default function ProjectsList() {
-  const projects = getProjects();
+export default async function ProjectsList() {
+  const projects = await getProjects();
   return (
     <Card className="rounded-2xl">
       <CardHeader>

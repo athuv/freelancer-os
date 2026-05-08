@@ -12,7 +12,7 @@ export default async function ProjectDetailPage({
 }) {
   const { id } = await params;
 
-  const project = getProjectById(id);
+  const project = await getProjectById(id);
 
   assertExists(project);
 

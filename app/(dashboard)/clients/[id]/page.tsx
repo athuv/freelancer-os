@@ -10,7 +10,7 @@ export default async function ClientDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const client = getClientById(id);
+  const client = await getClientById(id);
 
   assertExists(client);
 

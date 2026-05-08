@@ -4,8 +4,8 @@ import { Users } from 'lucide-react';
 import PageContainer from '@/app/components/layout/page-container';
 import { getClients } from '@/lib/data/clients';
 
-export default function ClientsPage() {
-  const clients = getClients();
+export default async function ClientsPage() {
+  const clients = await getClients();
   return (
     <PageContainer>
       <h1 className="text-2xl font-semibold tracking-tight">Clients</h1>
