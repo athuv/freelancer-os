@@ -6,10 +6,11 @@ import {
   CardTitle,
 } from '@/app/components/shadcn/card';
 import EmptyState from '@/app/components/shared/empty-state';
-import { projects } from '@/data/mock-projects';
+import { getProjects } from '@/lib/data/projects';
 import { FolderOpen } from 'lucide-react';
 
 export default function ProjectsList() {
+  const projects = getProjects();
   return (
     <Card className="rounded-2xl">
       <CardHeader>

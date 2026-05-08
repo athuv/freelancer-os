@@ -1,7 +1,7 @@
 import PageContainer from '@/app/components/layout/page-container';
 import ProjectHeader from '@/app/components/projects/project-header';
 import ProjectTasks from '@/app/components/projects/project-tasks';
-import { projects } from '@/data/mock-projects';
+import { getProjectById } from '@/lib/data/projects';
 import { notFound } from 'next/navigation';
 
 export default async function ProjectDetailPage({
@@ -11,7 +11,7 @@ export default async function ProjectDetailPage({
 }) {
   const { id } = await params;
 
-  const project = projects.find((p) => p.id === id);
+  const project = getProjectById(id);
 
   if (!project) return notFound();
 

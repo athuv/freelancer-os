@@ -1,8 +1,7 @@
 import { notFound } from 'next/navigation';
-
-import { clients } from '@/data/mock-clients';
 import { projects } from '@/data/mock-projects';
 import PageContainer from '@/app/components/layout/page-container';
+import { getClientById } from '@/lib/data/clients';
 
 export default async function ClientDetailPage({
   params,
@@ -10,7 +9,7 @@ export default async function ClientDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const client = clients.find((c) => c.id === id);
+  const client = getClientById(id);
 
   if (!client) return notFound();
 
