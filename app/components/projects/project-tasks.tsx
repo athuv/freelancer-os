@@ -14,10 +14,10 @@ export default function ProjectTasks({ tasks }: { tasks: Task[] }) {
   return (
     <Card className="rounded-2xl">
       <CardHeader>
-        <CardTitle>Tasks</CardTitle>
+        <CardTitle className="text-base font-semibold">Tasks</CardTitle>
       </CardHeader>
 
-      <CardContent className="space-y-3">
+      <CardContent className="space-y-2">
         {tasks.length === 0 ? (
           <EmptyState
             icon={<CheckCircle2 className="size-10" />}
