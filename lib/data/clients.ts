@@ -1,9 +1,9 @@
 import { clients } from '@/data/mock-clients';
 
-export function getClients() {
+export async function getClients() {
   return clients;
 }
 
-export function getClientById(id: string) {
+export async function getClientById(id: string) {
   return clients.find((c) => c.id === id);
 }
