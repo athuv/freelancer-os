@@ -3,6 +3,8 @@ import { projects } from '@/data/mock-projects';
 import PageContainer from '@/app/components/layout/page-container';
 import { getClientById } from '@/lib/data/clients';
 import { assertExists } from '@/lib/utils/handle-not-found';
+import EmptyState from '@/app/components/shared/empty-state';
+import { Folder } from 'lucide-react';
 
 export default async function ClientDetailPage({
   params,
@@ -40,9 +42,11 @@ export default async function ClientDetailPage({
         <h2 className="text-lg font-semibold">Projects</h2>
 
         {clientProjects.length === 0 ? (
-          <p className="text-muted-foreground text-sm">
-            No projects for this client.
-          </p>
+          <EmptyState
+            icon={<Folder className="size-10" />}
+            title="No projects yet"
+            description="Once you create or assign projects to this client, they will show up here."
+          />
         ) : (
           clientProjects.map((project) => (
             <Link
