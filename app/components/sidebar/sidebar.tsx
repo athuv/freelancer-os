@@ -9,7 +9,7 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="h-screen w-64 border-r p-4">
+    <aside className="hidden h-screen w-64 shrink-0 border-r p-4 md:block">
       <div className="mb-6 text-lg font-semibold">FreelancerOS</div>
 
       <nav className="flex flex-col gap-1">
