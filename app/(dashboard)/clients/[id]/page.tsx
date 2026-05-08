@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { projects } from '@/data/mock-projects';
 import PageContainer from '@/app/components/layout/page-container';
 import { getClientById } from '@/lib/data/clients';
@@ -45,9 +45,10 @@ export default async function ClientDetailPage({
           </p>
         ) : (
           clientProjects.map((project) => (
-            <div
+            <Link
               key={project.id}
-              className="flex items-center justify-between rounded-xl border px-4 py-3"
+              href={`/projects/${project.id}`}
+              className="hover:bg-muted/50 flex items-center justify-between rounded-xl border px-4 py-3 transition"
             >
               <div>
                 <p className="font-medium">{project.name}</p>
@@ -56,7 +57,7 @@ export default async function ClientDetailPage({
                   {project.status}
                 </p>
               </div>
-            </div>
+            </Link>
           ))
         )}
       </div>
