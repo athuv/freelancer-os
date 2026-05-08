@@ -3,7 +3,7 @@ import { Users, FolderKanban, DollarSign, AlertCircle } from 'lucide-react';
 
 export default function StatsCards() {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
       <StatCard title="Total Clients" value="12" icon={<Users size={16} />} />
       <StatCard
         title="Active Projects"
