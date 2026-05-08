@@ -1,4 +1,4 @@
-import Sidebar from '@/app/components/sidebar';
+import Sidebar from '@/app/components/sidebar/sidebar';
 import Topbar from '@/app/components/topbar';
 
 export default function DashboardLayout({
