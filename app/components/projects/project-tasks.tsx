@@ -1,23 +1,22 @@
 import TaskItem from '@/app/components/projects/task-item';
+import EmptyState from '@/app/components/shared/empty-state';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from '@/app/components/shadcn/card';
-import EmptyState from '@/app/components/shared/empty-state';
-
-import { Task } from '@/types/project';
 import { CheckCircle2 } from 'lucide-react';
+import { Task } from '@/types/project';
 
 export default function ProjectTasks({ tasks }: { tasks: Task[] }) {
   return (
     <Card className="rounded-2xl">
       <CardHeader>
-        <CardTitle className="text-base font-semibold">Tasks</CardTitle>
+        <CardTitle>Tasks</CardTitle>
       </CardHeader>
 
-      <CardContent className="space-y-2">
+      <CardContent className="space-y-3">
         {tasks.length === 0 ? (
           <EmptyState
             icon={<CheckCircle2 className="size-10" />}
