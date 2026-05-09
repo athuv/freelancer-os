@@ -19,18 +19,24 @@ import { createProject } from '@/lib/data/projects';
 import type { ProjectStatus } from '@/types/project';
 import { PROJECT_STATUS_VALUES } from '@/lib/constants/project-status';
 import { useRouter } from 'next/navigation';
+import { ProjectFormProps } from '@/types/project-form';
 
-export default function ProjectForm() {
+export default function ProjectForm({
+  mode = 'create',
+  project,
+}: ProjectFormProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [name, setName] = useState('');
-  const [client, setClient] = useState('');
-  const [status, setStatus] = useState<ProjectStatus>('planned');
-  const [description, setDescription] = useState('');
+
+  const [name, setName] = useState(project?.name ?? '');
+  const [client, setClient] = useState(project?.client ?? '');
+  const [status, setStatus] = useState<ProjectStatus>(
+    project?.status ?? 'planned',
+  );
+  const [description, setDescription] = useState(project?.description ?? '');
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
     setIsSubmitting(true);
 
     const result = projectSchema.safeParse({
@@ -46,7 +52,12 @@ export default function ProjectForm() {
     }
 
     try {
-      await createProject(result.data);
+      if (mode === 'edit' && project) {
+        console.log('UPDATE MODE', result.data);
+      } else {
+        await createProject(result.data);
+      }
+
       router.push('/projects');
     } finally {
       setIsSubmitting(false);
@@ -114,7 +125,11 @@ export default function ProjectForm() {
 
       <div className="flex items-center gap-3">
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Saving...' : 'Save Project'}
+          {isSubmitting
+            ? 'Saving...'
+            : mode === 'edit'
+              ? 'Update Project'
+              : 'Save Project'}
         </Button>
 
         <Button type="button" variant="outline" asChild>
