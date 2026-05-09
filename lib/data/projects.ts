@@ -22,6 +22,7 @@ export async function createProject(data: {
     name: data.name,
     client: data.client,
     status: data.status,
+    description: data.description,
     tasks: [],
   };
 
