@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/app/components/shadcn/select';
+import { projectSchema } from '@/lib/validation/project-schema';
 
 export default function ProjectForm() {
   const [name, setName] = useState('');
@@ -21,18 +22,23 @@ export default function ProjectForm() {
   const [status, setStatus] = useState('planned');
   const [description, setDescription] = useState('');
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  e.preventDefault();
 
-    const projectData = {
-      name,
-      client,
-      status,
-      description,
-    };
+  const result = projectSchema.safeParse({
+    name,
+    client,
+    status,
+    description,
+  });
 
-    console.log(projectData);
+  if (!result.success) {
+    console.log(result.error.format());
+    return;
   }
+
+  console.log('Valid project:', result.data);
+}
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
