@@ -3,7 +3,6 @@ import ProjectHeader from '@/app/components/projects/project-header';
 import ProjectTasks from '@/app/components/projects/project-tasks';
 import { getProjectById } from '@/lib/data/projects';
 import { assertExists } from '@/lib/utils/handle-not-found';
-import { notFound } from 'next/navigation';
 
 export default async function ProjectDetailPage({
   params,
@@ -18,8 +17,10 @@ export default async function ProjectDetailPage({
 
   return (
     <PageContainer>
-      <ProjectHeader project={project} />
-      <ProjectTasks tasks={project.tasks} />
+      <div className="space-y-6">
+        <ProjectHeader project={project} />
+        <ProjectTasks tasks={project.tasks} />
+      </div>
     </PageContainer>
   );
 }
