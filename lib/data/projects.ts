@@ -30,3 +30,28 @@ export async function createProject(data: {
 
   return newProject;
 }
+
+export async function updateProject(
+  id: string,
+  data: {
+    name: string;
+    client: string;
+    status: ProjectStatus;
+    description?: string;
+  },
+) {
+  await new Promise((res) => setTimeout(res, 500));
+
+  const project = projects.find((p) => p.id === id);
+
+  if (!project) {
+    return null;
+  }
+
+  project.name = data.name;
+  project.client = data.client;
+  project.status = data.status;
+  project.description = data.description;
+
+  return project;
+}
