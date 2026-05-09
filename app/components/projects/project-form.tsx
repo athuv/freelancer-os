@@ -15,30 +15,34 @@ import {
   SelectValue,
 } from '@/app/components/shadcn/select';
 import { projectSchema } from '@/lib/validation/project-schema';
+import { createProject } from '@/lib/data/projects';
+import type { ProjectStatus } from '@/types/project';
+import { PROJECT_STATUS_VALUES } from '@/lib/constants/project-status';
 
 export default function ProjectForm() {
   const [name, setName] = useState('');
   const [client, setClient] = useState('');
-  const [status, setStatus] = useState('planned');
+  const [status, setStatus] = useState<ProjectStatus>('planned');
   const [description, setDescription] = useState('');
 
-function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-  e.preventDefault();
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
 
-  const result = projectSchema.safeParse({
-    name,
-    client,
-    status,
-    description,
-  });
+    const result = projectSchema.safeParse({
+      name,
+      client,
+      status,
+      description,
+    });
 
-  if (!result.success) {
-    console.log(result.error.format());
-    return;
+    if (!result.success) {
+      console.log(result.error.format());
+      return;
+    }
+
+    const newProject = await createProject(result.data);
+    console.log('Created project:', newProject);
   }
-
-  console.log('Valid project:', result.data);
-}
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
@@ -72,16 +76,21 @@ function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
       <div className="space-y-2">
         <Label>Status</Label>
 
-        <Select value={status} onValueChange={setStatus}>
+        <Select
+          value={status}
+          onValueChange={(value) => {
+            if (PROJECT_STATUS_VALUES.includes(value as ProjectStatus)) {
+              setStatus(value as ProjectStatus);
+            }
+          }}
+        >
           <SelectTrigger>
             <SelectValue />
           </SelectTrigger>
 
           <SelectContent>
             <SelectItem value="planned">Planned</SelectItem>
-
             <SelectItem value="in-progress">In Progress</SelectItem>
-
             <SelectItem value="completed">Completed</SelectItem>
           </SelectContent>
         </Select>
