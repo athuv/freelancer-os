@@ -55,3 +55,17 @@ export async function updateProject(
 
   return project;
 }
+
+export async function deleteProject(id: string) {
+  await new Promise((res) => setTimeout(res, 500));
+
+  const index = projects.findIndex((p) => p.id === id);
+
+  if (index === -1) {
+    return null;
+  }
+
+  const [deletedProject] = projects.splice(index, 1);
+
+  return deletedProject;
+}
