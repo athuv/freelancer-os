@@ -15,9 +15,8 @@ import {
   SelectValue,
 } from '@/app/components/shadcn/select';
 import { projectSchema } from '@/lib/validation/project-schema';
-import { createProject } from '@/lib/data/projects';
+import { createProject, updateProject } from '@/lib/data/projects';
 import type { ProjectStatus } from '@/types/project';
-import { PROJECT_STATUS_VALUES } from '@/lib/constants/project-status';
 import { useRouter } from 'next/navigation';
 import { ProjectFormProps } from '@/types/project-form';
 
@@ -37,6 +36,7 @@ export default function ProjectForm({
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
     setIsSubmitting(true);
 
     const result = projectSchema.safeParse({
@@ -53,12 +53,14 @@ export default function ProjectForm({
 
     try {
       if (mode === 'edit' && project) {
-        console.log('UPDATE MODE', result.data);
+        await updateProject(project.id, result.data);
+
+        router.push(`/projects/${project.id}`);
       } else {
         await createProject(result.data);
-      }
 
-      router.push('/projects');
+        router.push('/projects');
+      }
     } finally {
       setIsSubmitting(false);
     }
