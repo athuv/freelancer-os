@@ -18,8 +18,11 @@ import { projectSchema } from '@/lib/validation/project-schema';
 import { createProject } from '@/lib/data/projects';
 import type { ProjectStatus } from '@/types/project';
 import { PROJECT_STATUS_VALUES } from '@/lib/constants/project-status';
+import { useRouter } from 'next/navigation';
 
 export default function ProjectForm() {
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [name, setName] = useState('');
   const [client, setClient] = useState('');
   const [status, setStatus] = useState<ProjectStatus>('planned');
@@ -27,6 +30,8 @@ export default function ProjectForm() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    setIsSubmitting(true);
 
     const result = projectSchema.safeParse({
       name,
@@ -36,12 +41,16 @@ export default function ProjectForm() {
     });
 
     if (!result.success) {
-      console.log(result.error.format());
+      setIsSubmitting(false);
       return;
     }
 
-    const newProject = await createProject(result.data);
-    console.log('Created project:', newProject);
+    try {
+      await createProject(result.data);
+      router.push('/projects');
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -108,7 +117,9 @@ export default function ProjectForm() {
       </div>
 
       <div className="flex items-center gap-3">
-        <Button type="submit">Save Project</Button>
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Saving...' : 'Save Project'}
+        </Button>
 
         <Button type="button" variant="outline" asChild>
           <Link href="/projects">Cancel</Link>
