@@ -1,14 +1,17 @@
-import { ProjectStatus } from '@/types/project';
+import type { ProjectStatus } from '@/types/project';
 
 export function getStatusVariant(status: ProjectStatus) {
   switch (status) {
-    case 'Completed':
-      return 'default';
-
-    case 'In Progress':
+    case 'planned':
       return 'secondary';
 
-    default:
+    case 'in-progress':
+      return 'default';
+
+    case 'completed':
       return 'outline';
+
+    default:
+      return 'secondary';
   }
 }
