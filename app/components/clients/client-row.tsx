@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Client } from '@/types/client';
 import DeleteClientButton from '@/app/components/clients/delete-client-button';
+import { Button } from '@/app/components/shadcn/button';
 
 type Props = {
   client: Client;
@@ -26,6 +27,10 @@ export default function ClientRow({ client }: Props) {
             {client.company}
           </span>
         )}
+
+        <Button variant="outline" size="sm" asChild>
+          <Link href={`/clients/${client.id}/edit`}>Edit</Link>
+        </Button>
 
         <DeleteClientButton clientId={client.id} />
       </div>
