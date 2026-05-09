@@ -18,8 +18,9 @@ export default async function ProjectsList() {
           href={`/projects/${project.id}`}
           className="hover:bg-muted/50 flex items-center justify-between rounded-xl border px-4 py-3 transition"
         >
-          <div>
+          <div className="space-y-1">
             <p className="font-medium">{project.name}</p>
+
             <p className="text-muted-foreground text-sm">{project.client}</p>
           </div>
 
