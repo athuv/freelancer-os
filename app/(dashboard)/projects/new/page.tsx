@@ -1,5 +1,6 @@
 import PageContainer from '@/app/components/layout/page-container';
 import PageHeader from '@/app/components/layout/page-header';
+import ProjectForm from '@/app/components/projects/project-form';
 
 export default function NewProjectPage() {
   return (
@@ -10,7 +11,7 @@ export default function NewProjectPage() {
           description="Add a new project to start tracking work and tasks."
         />
 
-        <div className="rounded-2xl border p-6">Project form goes here</div>
+        <ProjectForm />
       </div>
     </PageContainer>
   );
