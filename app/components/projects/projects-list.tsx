@@ -1,35 +1,33 @@
-import ProjectRow from '@/app/components/projects/project-row';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/app/components/shadcn/card';
-import EmptyState from '@/app/components/shared/empty-state';
+import Link from 'next/link';
 import { getProjects } from '@/lib/data/projects';
-import { FolderOpen } from 'lucide-react';
+import { Badge } from '@/app/components/shadcn/badge';
+import { getStatusVariant } from '@/lib/utils/project-status';
 
 export default async function ProjectsList() {
   const projects = await getProjects();
-  return (
-    <Card className="rounded-2xl">
-      <CardHeader>
-        <CardTitle>All Projects</CardTitle>
-      </CardHeader>
 
-      <CardContent className="flex flex-col gap-3">
-        {projects.length === 0 ? (
-          <EmptyState
-            icon={<FolderOpen className="size-10" />}
-            title="No projects yet"
-            description="Create your first project to start tracking your work."
-          />
-        ) : (
-          projects.map((project) => (
-            <ProjectRow key={project.id} project={project} />
-          ))
-        )}
-      </CardContent>
-    </Card>
+  if (projects.length === 0) {
+    return <p className="text-muted-foreground text-sm">No projects found.</p>;
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      {projects.map((project) => (
+        <Link
+          key={project.id}
+          href={`/projects/${project.id}`}
+          className="hover:bg-muted/50 flex items-center justify-between rounded-xl border px-4 py-3 transition"
+        >
+          <div>
+            <p className="font-medium">{project.name}</p>
+            <p className="text-muted-foreground text-sm">{project.client}</p>
+          </div>
+
+          <Badge variant={getStatusVariant(project.status)}>
+            {project.status}
+          </Badge>
+        </Link>
+      ))}
+    </div>
   );
 }
