@@ -87,11 +87,7 @@ export default function ProjectForm() {
 
         <Select
           value={status}
-          onValueChange={(value) => {
-            if (PROJECT_STATUS_VALUES.includes(value as ProjectStatus)) {
-              setStatus(value as ProjectStatus);
-            }
-          }}
+          onValueChange={(value) => setStatus(value as ProjectStatus)}
         >
           <SelectTrigger>
             <SelectValue />
