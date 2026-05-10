@@ -5,7 +5,11 @@ export default defineSchema({
   projects: defineTable({
     name: v.string(),
     client: v.string(),
-    status: v.string(),
+    status: v.union(
+      v.literal('planned'),
+      v.literal('in-progress'),
+      v.literal('completed'),
+    ),
     description: v.optional(v.string()),
   }),
 
