@@ -1,4 +1,8 @@
-export type ProjectStatus = 'planned' | 'in-progress' | 'completed';
+import { Infer } from 'convex/values';
+import { Id } from '@/convex/_generated/dataModel';
+import { ProjectStatus as ProjectStatusValidator } from '@/convex/schemaHelpers';
+
+export type ProjectStatus = Infer<typeof ProjectStatusValidator>;
 
 export type Task = {
   id: string;
@@ -7,7 +11,7 @@ export type Task = {
 };
 
 export type Project = {
-  id: string;
+  _id: Id<'projects'>;
   name: string;
   client: string;
   status: ProjectStatus;
