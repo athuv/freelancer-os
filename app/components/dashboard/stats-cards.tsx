@@ -1,25 +1,52 @@
-import StatCard from '@/app/components/dashboard/stat-card';
-import { Users, FolderKanban, DollarSign, AlertCircle } from 'lucide-react';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/app/components/shadcn/card';
 
-export default function StatsCards() {
+import { getDashboardStats } from '@/lib/data/dashboard';
+
+export default async function StatsCards() {
+  const stats = await getDashboardStats();
+
   return (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-      <StatCard title="Total Clients" value="12" icon={<Users size={16} />} />
-      <StatCard
-        title="Active Projects"
-        value="5"
-        icon={<FolderKanban size={16} />}
-      />
-      <StatCard
-        title="Revenue"
-        value="$8,240"
-        icon={<DollarSign size={16} />}
-      />
-      <StatCard
-        title="Outstanding"
-        value="$1,200"
-        icon={<AlertCircle size={16} />}
-      />
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>Total Projects</CardTitle>
+        </CardHeader>
+        <CardContent className="text-2xl font-semibold">
+          {stats.totalProjects}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Completed</CardTitle>
+        </CardHeader>
+        <CardContent className="text-2xl font-semibold">
+          {stats.completedProjects}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>In Progress</CardTitle>
+        </CardHeader>
+        <CardContent className="text-2xl font-semibold">
+          {stats.inProgressProjects}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Clients</CardTitle>
+        </CardHeader>
+        <CardContent className="text-2xl font-semibold">
+          {stats.totalClients}
+        </CardContent>
+      </Card>
     </div>
   );
 }
