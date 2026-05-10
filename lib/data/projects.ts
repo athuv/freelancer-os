@@ -69,3 +69,51 @@ export async function deleteProject(id: string) {
 
   return deletedProject;
 }
+
+export async function addTask(projectId: string, title: string) {
+  const project = projects.find((p) => p.id === projectId);
+
+  if (!project) {
+    return null;
+  }
+
+  const newTask = {
+    id: crypto.randomUUID(),
+    title,
+    done: false,
+  };
+
+  project.tasks.push(newTask);
+
+  return newTask;
+}
+
+export async function toggleTask(projectId: string, taskId: string) {
+  const project = projects.find((p) => p.id === projectId);
+
+  if (!project) {
+    return null;
+  }
+
+  const task = project.tasks.find((t) => t.id === taskId);
+
+  if (!task) {
+    return null;
+  }
+
+  task.done = !task.done;
+
+  return task;
+}
+
+export async function deleteTask(projectId: string, taskId: string) {
+  const project = projects.find((p) => p.id === projectId);
+
+  if (!project) {
+    return null;
+  }
+
+  project.tasks = project.tasks.filter((t) => t.id !== taskId);
+
+  return true;
+}
