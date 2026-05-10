@@ -19,7 +19,7 @@ export default async function ProjectDetailPage({
     <PageContainer>
       <div className="space-y-6">
         <ProjectHeader project={project} />
-        <ProjectTasks tasks={project.tasks} />
+        <ProjectTasks tasks={project.tasks} projectId={project.id} />
       </div>
     </PageContainer>
   );
