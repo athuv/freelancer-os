@@ -15,7 +15,6 @@ import {
   SelectValue,
 } from '@/app/components/shadcn/select';
 import { projectSchema } from '@/lib/validation/project-schema';
-import { updateProject } from '@/lib/data/projects';
 import type { ProjectStatus } from '@/types/project';
 import { useRouter } from 'next/navigation';
 import { ProjectFormProps } from '@/types/project-form';
@@ -38,6 +37,7 @@ export default function ProjectForm({
   const [description, setDescription] = useState(project?.description ?? '');
 
   const createProject = useMutation(api.projects.createProject);
+  const updateProject = useMutation(api.projects.updateProject);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -58,11 +58,19 @@ export default function ProjectForm({
 
     try {
       if (mode === 'edit' && project) {
-        await updateProject(project.id, result.data);
+        await updateProject({
+          id: project._id,
+          ...result.data,
+        });
 
-        router.push(`/projects/${project.id}`);
+        router.push(`/projects/${project._id}`);
       } else {
-        await createProject(result.data);
+        await createProject({
+          name: result.data.name,
+          client: result.data.client,
+          status: result.data.status,
+          description: result.data.description,
+        });
 
         router.push('/projects');
       }
