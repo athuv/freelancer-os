@@ -15,10 +15,13 @@ import {
   SelectValue,
 } from '@/app/components/shadcn/select';
 import { projectSchema } from '@/lib/validation/project-schema';
-import { createProject, updateProject } from '@/lib/data/projects';
+import { updateProject } from '@/lib/data/projects';
 import type { ProjectStatus } from '@/types/project';
 import { useRouter } from 'next/navigation';
 import { ProjectFormProps } from '@/types/project-form';
+
+import { useMutation } from 'convex/react';
+import { api } from '@/convex/_generated/api';
 
 export default function ProjectForm({
   mode = 'create',
@@ -33,6 +36,8 @@ export default function ProjectForm({
     project?.status ?? 'planned',
   );
   const [description, setDescription] = useState(project?.description ?? '');
+
+  const createProject = useMutation(api.projects.createProject);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
