@@ -1,5 +1,6 @@
 import { query, mutation } from './_generated/server';
 import { v } from 'convex/values';
+import { ProjectStatus } from './schemaHelpers';
 
 // GET all projects
 export const getProjects = query({
@@ -14,11 +15,28 @@ export const createProject = mutation({
   args: {
     name: v.string(),
     client: v.string(),
-    status: v.string(),
+    status: ProjectStatus,
     description: v.optional(v.string()),
   },
 
   handler: async (ctx, args) => {
     return await ctx.db.insert('projects', args);
+  },
+});
+
+// UPDATE project
+export const updateProject = mutation({
+  args: {
+    id: v.id('projects'),
+    name: v.string(),
+    client: v.string(),
+    status: ProjectStatus,
+    description: v.optional(v.string()),
+  },
+
+  handler: async (ctx, args) => {
+    const { id, ...rest } = args;
+
+    await ctx.db.patch(id, rest);
   },
 });
