@@ -1,10 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-
 import { Trash2 } from 'lucide-react';
-
 import { Button } from '@/app/components/shadcn/button';
 
 import {
@@ -19,26 +16,29 @@ import {
   AlertDialogTrigger,
 } from '@/app/components/shadcn/alert-dialog';
 
-import { deleteProject } from '@/lib/data/projects';
+import { useMutation } from 'convex/react';
+import { api } from '@/convex/_generated/api';
+import { Id } from '@/convex/_generated/dataModel';
+import { toast } from 'sonner';
 
 type DeleteProjectButtonProps = {
-  projectId: string;
+  projectId: Id<'projects'>;
 };
 
 export default function DeleteProjectButton({
   projectId,
 }: DeleteProjectButtonProps) {
-  const router = useRouter();
-
   const [isDeleting, setIsDeleting] = useState(false);
+
+  const deleteProject = useMutation(api.projects.deleteProject);
 
   async function handleDelete() {
     setIsDeleting(true);
 
     try {
-      await deleteProject(projectId);
+      await deleteProject({ id: projectId });
 
-      router.push('/projects');
+      toast.success('Project deleted');
     } finally {
       setIsDeleting(false);
     }
