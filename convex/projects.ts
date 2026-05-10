@@ -40,3 +40,14 @@ export const updateProject = mutation({
     await ctx.db.patch(id, rest);
   },
 });
+
+// DELETE project
+export const deleteProject = mutation({
+  args: {
+    id: v.id('projects'),
+  },
+
+  handler: async (ctx, args) => {
+    await ctx.db.delete(args.id);
+  },
+});
