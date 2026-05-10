@@ -1,6 +1,5 @@
 import PageContainer from '@/app/components/layout/page-container';
 import RecentProjectsWidget from '@/app/components/dashboard/recent-projects-widget';
-
 import StatsCards from '@/app/components/dashboard/stats-cards';
 
 export default function DashboardPage() {
@@ -15,6 +14,14 @@ export default function DashboardPage() {
         <section className="space-y-3">
           <h2 className="text-lg font-semibold">Recent Projects</h2>
           <RecentProjectsWidget />
+        </section>
+
+        <section className="space-y-3">
+          <h2 className="text-lg font-semibold">Insights</h2>
+
+          <div className="text-muted-foreground text-sm">
+            Completion rate is shown in stats above.
+          </div>
         </section>
       </div>
     </PageContainer>
