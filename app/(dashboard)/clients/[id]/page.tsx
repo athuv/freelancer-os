@@ -1,3 +1,9 @@
+'use client';
+
+import { useQuery } from 'convex/react';
+import { api } from '@/convex/_generated/api';
+import { useParams } from 'next/navigation';
+
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 
@@ -12,19 +18,20 @@ import {
 } from '@/app/components/shadcn/card';
 
 import { Button } from '@/app/components/shadcn/button';
-
-import { getClientById } from '@/lib/data/clients';
-
 import DeleteClientButton from '@/app/components/clients/delete-client-button';
+import { Id } from '@/convex/_generated/dataModel';
 
-export default async function ClientDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
+export default function ClientDetailPage() {
+  const params = useParams();
+  const id = params.id as Id<'clients'>;
 
-  const client = await getClientById(id);
+  const client = useQuery(api.clients.getClientById, {
+    id,
+  });
+
+  if (client === undefined) {
+    return <p>Loading...</p>;
+  }
 
   if (!client) {
     notFound();
@@ -39,10 +46,10 @@ export default async function ClientDetailPage({
           action={
             <div className="flex items-center gap-3">
               <Button variant="outline" asChild>
-                <Link href={`/clients/${client.id}/edit`}>Edit Client</Link>
+                <Link href={`/clients/${id}/edit`}>Edit Client</Link>
               </Button>
 
-              <DeleteClientButton clientId={client.id} />
+              <DeleteClientButton clientId={client._id} />
             </div>
           }
         />
@@ -55,20 +62,17 @@ export default async function ClientDetailPage({
           <CardContent className="space-y-4">
             <div>
               <p className="text-muted-foreground text-sm">Name</p>
-
               <p className="font-medium">{client.name}</p>
             </div>
 
             <div>
               <p className="text-muted-foreground text-sm">Email</p>
-
               <p className="font-medium">{client.email}</p>
             </div>
 
             {client.company && (
               <div>
                 <p className="text-muted-foreground text-sm">Company</p>
-
                 <p className="font-medium">{client.company}</p>
               </div>
             )}
