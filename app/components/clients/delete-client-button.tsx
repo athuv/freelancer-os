@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { Trash2 } from 'lucide-react';
 
 import { Button } from '@/app/components/shadcn/button';
-import { deleteClient } from '@/lib/data/clients';
 
 import {
   AlertDialog,
@@ -18,20 +17,25 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/app/components/shadcn/alert-dialog';
+import { useMutation } from 'convex/react';
+import { api } from '@/convex/_generated/api';
+import { Id } from '@/convex/_generated/dataModel';
 
 type Props = {
-  clientId: string;
+  clientId: Id<'clients'>;
 };
 
 export default function DeleteClientButton({ clientId }: Props) {
   const router = useRouter();
   const [isDeleting, setIsDeleting] = useState(false);
 
+  const deleteClient = useMutation(api.clients.deleteClient);
+
   async function handleDelete() {
     setIsDeleting(true);
 
     try {
-      await deleteClient(clientId);
+      await deleteClient({ id: clientId });
       router.refresh();
     } finally {
       setIsDeleting(false);
