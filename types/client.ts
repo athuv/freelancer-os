@@ -1,6 +1,8 @@
+import { Id } from '@/convex/_generated/dataModel';
+
 export type Client = {
-  id: string;
+  _id: Id<'clients'>;
   name: string;
-  email: string;
+  email?: string;
   company?: string;
 };
