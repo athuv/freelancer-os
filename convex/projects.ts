@@ -10,6 +10,17 @@ export const getProjects = query({
   },
 });
 
+// GET By ID projects
+export const getProjectById = query({
+  args: {
+    id: v.id('projects'),
+  },
+
+  handler: async (ctx, args) => {
+    return await ctx.db.get(args.id);
+  },
+});
+
 // CREATE project
 export const createProject = mutation({
   args: {
