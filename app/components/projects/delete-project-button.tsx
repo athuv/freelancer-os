@@ -20,14 +20,18 @@ import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 type DeleteProjectButtonProps = {
   projectId: Id<'projects'>;
+  redirectTo?: string;
 };
 
 export default function DeleteProjectButton({
   projectId,
+  redirectTo,
 }: DeleteProjectButtonProps) {
+  const router = useRouter();
   const [isDeleting, setIsDeleting] = useState(false);
 
   const deleteProject = useMutation(api.projects.deleteProject);
@@ -39,6 +43,10 @@ export default function DeleteProjectButton({
       await deleteProject({ id: projectId });
 
       toast.success('Project deleted');
+
+      if (redirectTo) {
+        router.push(redirectTo);
+      }
     } finally {
       setIsDeleting(false);
     }
