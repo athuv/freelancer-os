@@ -8,6 +8,16 @@ export const getClients = query({
   },
 });
 
+export const getClientById = query({
+  args: {
+    id: v.id('clients'),
+  },
+
+  handler: async (ctx, args) => {
+    return await ctx.db.get(args.id);
+  },
+});
+
 export const createClient = mutation({
   args: {
     name: v.string(),
