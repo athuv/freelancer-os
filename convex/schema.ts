@@ -21,7 +21,7 @@ export default defineSchema({
 
   clients: defineTable({
     name: v.string(),
-    email: v.string(),
+    email: v.optional(v.string()),
     company: v.optional(v.string()),
   }),
 });
