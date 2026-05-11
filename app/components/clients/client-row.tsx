@@ -12,7 +12,7 @@ export default function ClientRow({ client }: Props) {
     <div className="hover:bg-muted/50 flex items-center justify-between rounded-xl border px-4 py-3 transition">
       <div className="space-y-0.5">
         <Link
-          href={`/clients/${client.id}`}
+          href={`/clients/${client._id}`}
           className="font-medium hover:underline"
         >
           {client.name}
@@ -29,10 +29,10 @@ export default function ClientRow({ client }: Props) {
         )}
 
         <Button variant="outline" size="sm" asChild>
-          <Link href={`/clients/${client.id}/edit`}>Edit</Link>
+          <Link href={`/clients/${client._id}/edit`}>Edit</Link>
         </Button>
 
-        <DeleteClientButton clientId={client.id} />
+        <DeleteClientButton clientId={client._id} />
       </div>
     </div>
   );
