@@ -4,11 +4,13 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+import { useMutation } from 'convex/react';
+import { api } from '@/convex/_generated/api';
+
 import { Button } from '@/app/components/shadcn/button';
 import { Input } from '@/app/components/shadcn/input';
 import { Label } from '@/app/components/shadcn/label';
 
-import { createClient, updateClient } from '@/lib/data/clients';
 import { clientSchema } from '@/lib/validation/client-schema';
 
 import type { ClientFormProps } from '@/types/client-form';
@@ -24,6 +26,9 @@ export default function ClientForm({
   const [name, setName] = useState(client?.name ?? '');
   const [email, setEmail] = useState(client?.email ?? '');
   const [company, setCompany] = useState(client?.company ?? '');
+
+  const createClient = useMutation(api.clients.createClient);
+  const updateClient = useMutation(api.clients.updateClient);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -43,11 +48,18 @@ export default function ClientForm({
 
     try {
       if (mode === 'edit' && client) {
-        await updateClient(client.id, result.data);
+        await updateClient({
+          id: client._id,
+          ...result.data,
+        });
 
-        router.push(`/clients/${client.id}`);
+        router.push(`/clients/${client._id}`);
       } else {
-        await createClient(result.data);
+        await createClient({
+          name: result.data.name,
+          email: result.data.email || undefined,
+          company: result.data.company || undefined,
+        });
 
         router.push('/clients');
       }
