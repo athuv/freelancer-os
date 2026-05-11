@@ -20,6 +20,21 @@ export const createClient = mutation({
   },
 });
 
+export const updateClient = mutation({
+  args: {
+    id: v.id('clients'),
+    name: v.string(),
+    email: v.optional(v.string()),
+    company: v.optional(v.string()),
+  },
+
+  handler: async (ctx, args) => {
+    const { id, ...rest } = args;
+
+    await ctx.db.patch(id, rest);
+  },
+});
+
 export const deleteClient = mutation({
   args: {
     id: v.id('clients'),
