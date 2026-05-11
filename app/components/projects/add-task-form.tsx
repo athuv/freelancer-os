@@ -1,22 +1,24 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+
+import { useMutation } from 'convex/react';
+
+import { api } from '@/convex/_generated/api';
+import { Id } from '@/convex/_generated/dataModel';
 
 import { Button } from '@/app/components/shadcn/button';
 import { Input } from '@/app/components/shadcn/input';
 
-import { addTask } from '@/lib/data/projects';
-
 type Props = {
-  projectId: string;
+  projectId: Id<'projects'>;
 };
 
 export default function AddTaskForm({ projectId }: Props) {
-  const router = useRouter();
-
   const [title, setTitle] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const createTask = useMutation(api.tasks.createTask);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -28,11 +30,12 @@ export default function AddTaskForm({ projectId }: Props) {
     setIsSubmitting(true);
 
     try {
-      await addTask(projectId, title);
+      await createTask({
+        title,
+        projectId,
+      });
 
       setTitle('');
-
-      router.refresh();
     } finally {
       setIsSubmitting(false);
     }
@@ -47,7 +50,7 @@ export default function AddTaskForm({ projectId }: Props) {
       />
 
       <Button type="submit" disabled={isSubmitting}>
-        Add
+        {isSubmitting ? 'Adding...' : 'Add'}
       </Button>
     </form>
   );
