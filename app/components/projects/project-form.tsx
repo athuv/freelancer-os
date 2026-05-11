@@ -19,7 +19,7 @@ import type { ProjectStatus } from '@/types/project';
 import { useRouter } from 'next/navigation';
 import { ProjectFormProps } from '@/types/project-form';
 
-import { useMutation } from 'convex/react';
+import { useMutation, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 
 export default function ProjectForm({
@@ -36,6 +36,7 @@ export default function ProjectForm({
   );
   const [description, setDescription] = useState(project?.description ?? '');
 
+  const clients = useQuery(api.clients.getClients);
   const createProject = useMutation(api.projects.createProject);
   const updateProject = useMutation(api.projects.updateProject);
 
@@ -95,15 +96,23 @@ export default function ProjectForm({
       <div className="space-y-2">
         <Label htmlFor="client">Client</Label>
 
-        <Select value={client} onValueChange={setClient}>
+        <Select disabled={!clients} value={client} onValueChange={setClient}>
           <SelectTrigger>
             <SelectValue placeholder="Select a client" />
           </SelectTrigger>
 
           <SelectContent>
-            <SelectItem value="john-doe">John Doe</SelectItem>
+            {clients?.length === 0 && (
+              <SelectItem value="none" disabled>
+                No clients found
+              </SelectItem>
+            )}
 
-            <SelectItem value="acme-inc">Acme Inc</SelectItem>
+            {clients?.map((client) => (
+              <SelectItem key={client._id} value={client.name}>
+                {client.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
