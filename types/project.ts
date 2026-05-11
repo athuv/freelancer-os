@@ -16,5 +16,4 @@ export type Project = {
   client: string;
   status: ProjectStatus;
   description?: string;
-  tasks: Task[];
 };
