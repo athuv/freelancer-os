@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { Trash2 } from 'lucide-react';
 
 import {
@@ -14,34 +13,45 @@ import { Button } from '@/app/components/shadcn/button';
 import { Checkbox } from '@/app/components/shadcn/checkbox';
 import { Progress } from '@/app/components/shadcn/progress';
 
-import { deleteTask, toggleTask } from '@/lib/data/projects';
-
-import type { Task } from '@/types/project';
 import AddTaskForm from '@/app/components/projects/add-task-form';
 
+import { useQuery, useMutation } from 'convex/react';
+import { api } from '@/convex/_generated/api';
+import { Id } from '@/convex/_generated/dataModel';
+
 type Props = {
-  projectId: string;
-  tasks: Task[];
+  projectId: Id<'projects'>;
 };
 
-export default function ProjectTasks({ projectId, tasks }: Props) {
-  const router = useRouter();
+export default function ProjectTasks({ projectId }: Props) {
+  const tasks = useQuery(api.tasks.getTasksByProject, {
+    projectId,
+  });
+
+  const toggleTask = useMutation(api.tasks.toggleTask);
+  const deleteTask = useMutation(api.tasks.deleteTask);
+
+  if (!tasks) {
+    return (
+      <Card className="rounded-2xl">
+        <CardContent className="py-6">
+          <p className="text-muted-foreground text-sm">Loading tasks...</p>
+        </CardContent>
+      </Card>
+    );
+  }
 
   const completedTasks = tasks.filter((task) => task.done).length;
 
   const progress =
     tasks.length === 0 ? 0 : Math.round((completedTasks / tasks.length) * 100);
 
-  async function handleToggle(taskId: string) {
-    await toggleTask(projectId, taskId);
-
-    router.refresh();
+  async function handleToggle(taskId: Id<'tasks'>) {
+    await toggleTask({ id: taskId });
   }
 
-  async function handleDelete(taskId: string) {
-    await deleteTask(projectId, taskId);
-
-    router.refresh();
+  async function handleDelete(taskId: Id<'tasks'>) {
+    await deleteTask({ id: taskId });
   }
 
   return (
@@ -73,13 +83,13 @@ export default function ProjectTasks({ projectId, tasks }: Props) {
           <div className="space-y-3">
             {tasks.map((task) => (
               <div
-                key={task.id}
+                key={task._id}
                 className="flex items-center justify-between rounded-xl border p-3"
               >
                 <div className="flex items-center gap-3">
                   <Checkbox
                     checked={task.done}
-                    onCheckedChange={() => handleToggle(task.id)}
+                    onCheckedChange={() => handleToggle(task._id)}
                   />
 
                   <p
@@ -94,7 +104,8 @@ export default function ProjectTasks({ projectId, tasks }: Props) {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => handleDelete(task.id)}
+                  className="text-destructive hover:text-destructive"
+                  onClick={() => handleDelete(task._id)}
                 >
                   <Trash2 className="size-4" />
                 </Button>
