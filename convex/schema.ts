@@ -14,9 +14,9 @@ export default defineSchema({
   }),
 
   tasks: defineTable({
-    projectId: v.id('projects'),
     title: v.string(),
     done: v.boolean(),
+    projectId: v.id('projects'),
   }),
 
   clients: defineTable({
