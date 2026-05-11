@@ -1,14 +1,19 @@
 'use client';
 
 import ClientRow from '@/app/components/clients/client-row';
+import ClientRowSkeleton from '@/app/components/shared/skeletons/client-row-skeleton';
 import { api } from '@/convex/_generated/api';
 import { useQuery } from 'convex/react';
 
 export default function ClientsList() {
   const clients = useQuery(api.clients.getClients);
 
-  if (!clients) {
-    return <p>Loading...</p>;
+  if (clients === undefined) {
+    return (
+      <div className="space-y-3">
+        <ClientRowSkeleton />
+      </div>
+    );
   }
 
   if (clients.length === 0) {
