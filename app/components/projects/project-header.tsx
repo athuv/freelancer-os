@@ -18,7 +18,7 @@ export default function ProjectHeader({ project }: { project: Project }) {
             {project.status}
           </Badge>
 
-          <DeleteProjectButton projectId={project.id} />
+          <DeleteProjectButton projectId={project._id} />
         </div>
       </div>
     </div>
