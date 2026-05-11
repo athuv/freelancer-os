@@ -10,6 +10,7 @@
 
 import type * as projects from "../projects.js";
 import type * as schemaHelpers from "../schemaHelpers.js";
+import type * as tasks from "../tasks.js";
 
 import type {
   ApiFromModules,
@@ -20,6 +21,7 @@ import type {
 declare const fullApi: ApiFromModules<{
   projects: typeof projects;
   schemaHelpers: typeof schemaHelpers;
+  tasks: typeof tasks;
 }>;
 
 /**
