@@ -1,17 +1,23 @@
+'use client';
+
 import PageContainer from '@/app/components/layout/page-container';
 import PageHeader from '@/app/components/layout/page-header';
 import ProjectForm from '@/app/components/projects/project-form';
-import { getProjectById } from '@/lib/data/projects';
+import { useQuery } from 'convex/react';
+import { api } from '@/convex/_generated/api';
+
+import { Id } from '@/convex/_generated/dataModel';
 import { assertExists } from '@/lib/utils/handle-not-found';
+import { useParams } from 'next/navigation';
 
-export default async function EditProjectPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
+export default function EditProjectPage() {
+  const params = useParams();
+  const id = params.id as Id<'projects'>;
+  const project = useQuery(api.projects.getProjectById, { id });
 
-  const project = await getProjectById(id);
+  if (project === undefined) {
+    return <p>Loading...</p>;
+  }
 
   assertExists(project);
 
