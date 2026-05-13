@@ -8,7 +8,9 @@ import { api } from '@/convex/_generated/api';
 
 export default function DashboardPage() {
   const stats = useQuery(api.dashboard.getDashboardStats);
-  if (!stats) {
+  const projects = useQuery(api.projects.getProjects);
+
+  if (!stats || !projects) {
     return <div>Loading...</div>;
   }
 
@@ -22,7 +24,7 @@ export default function DashboardPage() {
 
         <section className="space-y-3">
           <h2 className="text-lg font-semibold">Recent Projects</h2>
-          <RecentProjectsWidget />
+          <RecentProjectsWidget projects={projects} />
         </section>
 
         <section className="space-y-3">
