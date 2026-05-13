@@ -1,15 +1,19 @@
 import Link from 'next/link';
 import { Badge } from '@/app/components/shadcn/badge';
-import { projects } from '@/data/mock-projects';
 import { getStatusVariant } from '@/lib/utils/project-status';
+import type { Project } from '@/types/project';
 
-export default function RecentProjectsWidget() {
+type Props = {
+  projects: Project[];
+};
+
+export default function RecentProjectsWidget({ projects }: Props) {
   return (
     <div className="space-y-3">
-      {projects.slice(0, 3).map((project) => (
+      {projects.map((project) => (
         <Link
-          key={project.id}
-          href={`/projects/${project.id}`}
+          key={project._id}
+          href={`/projects/${project._id}`}
           className="hover:bg-muted/50 flex items-center justify-between rounded-xl border px-3 py-3 transition"
         >
           <div>
