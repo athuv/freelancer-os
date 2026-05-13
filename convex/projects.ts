@@ -62,3 +62,10 @@ export const deleteProject = mutation({
     await ctx.db.delete(args.id);
   },
 });
+
+export const getRecentProjects = query({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.db.query('projects').order('desc').take(5);
+  },
+});
