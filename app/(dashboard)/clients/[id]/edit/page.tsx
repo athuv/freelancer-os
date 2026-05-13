@@ -6,6 +6,7 @@ import { api } from '@/convex/_generated/api';
 
 import { Id } from '@/convex/_generated/dataModel';
 import ClientForm from '@/app/components/clients/client-form';
+import ClientFormSkeleton from '@/app/components/shared/skeletons/client-form-skeleton';
 
 export default function EditClientPage() {
   const params = useParams();
@@ -14,7 +15,7 @@ export default function EditClientPage() {
   const client = useQuery(api.clients.getClientById, { id });
 
   if (client === undefined) {
-    return <p>Loading...</p>;
+    return <ClientFormSkeleton />;
   }
 
   if (!client) {
