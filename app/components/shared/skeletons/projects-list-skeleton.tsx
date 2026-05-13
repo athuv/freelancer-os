@@ -1,29 +1,35 @@
-import { Card, CardContent } from '@/app/components/shadcn/card';
 import { Skeleton } from '@/app/components/shadcn/skeleton';
 
 type Props = {
   count?: number;
 };
 
-export default function ProjectsListSkeleton({ count = 5 }: Props) {
+export default function ProjectsListSkeleton({ count = 3 }: Props) {
   return (
     <div className="space-y-3">
       {Array.from({ length: count }).map((_, index) => (
-        <Card key={index}>
-          <CardContent className="flex items-center justify-between p-6">
-            <div className="space-y-3">
-              <Skeleton className="h-5 w-40" />
+        <div
+          key={index}
+          className="flex items-center justify-between rounded-xl border px-4 py-3"
+        >
+          {/* LEFT SIDE */}
+          <div className="space-y-2">
+            <Skeleton className="h-5 w-40" />
+            <Skeleton className="h-4 w-52" />
+          </div>
 
-              <Skeleton className="h-4 w-28" />
-            </div>
+          {/* RIGHT SIDE */}
+          <div className="flex items-center gap-3">
+            {/* company (hidden on mobile in real UI) */}
+            <Skeleton className="hidden h-4 w-24 sm:block" />
 
-            <div className="flex items-center gap-3">
-              <Skeleton className="h-6 w-24 rounded-full" />
+            {/* edit button */}
+            <Skeleton className="h-7 w-11 rounded-md" />
 
-              <Skeleton className="h-9 w-9 rounded-md" />
-            </div>
-          </CardContent>
-        </Card>
+            {/* delete button */}
+            <Skeleton className="h-8 w-8 rounded-md" />
+          </div>
+        </div>
       ))}
     </div>
   );
