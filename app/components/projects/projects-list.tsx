@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from '@/app/components/shadcn/card';
 import EmptyState from '@/app/components/shared/empty-state';
+import ProjectsListSkeleton from '@/app/components/shared/skeletons/projects-list-skeleton';
 import { api } from '@/convex/_generated/api';
 import { useQuery } from 'convex/react';
 import { FolderOpen } from 'lucide-react';
@@ -15,9 +16,6 @@ import { FolderOpen } from 'lucide-react';
 export default function ProjectsList() {
   const projects = useQuery(api.projects.getProjects);
 
-  if (projects === undefined) {
-    return <div className="space-y-3">not found</div>;
-  }
   return (
     <Card className="rounded-2xl">
       <CardHeader>
@@ -25,7 +23,11 @@ export default function ProjectsList() {
       </CardHeader>
 
       <CardContent className="flex flex-col gap-3">
-        {projects.length === 0 ? (
+        {projects === undefined ? (
+          <div className="space-y-3">
+            <ProjectsListSkeleton />
+          </div>
+        ) : projects.length === 0 ? (
           <EmptyState
             icon={<FolderOpen className="size-10" />}
             title="No projects yet"
