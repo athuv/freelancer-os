@@ -9,6 +9,7 @@ import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
 import { assertExists } from '@/lib/utils/handle-not-found';
 import { useParams } from 'next/navigation';
+import ProjectFormSkeleton from '@/app/components/shared/skeletons/project-form-skeleton';
 
 export default function EditProjectPage() {
   const params = useParams();
@@ -16,7 +17,7 @@ export default function EditProjectPage() {
   const project = useQuery(api.projects.getProjectById, { id });
 
   if (project === undefined) {
-    return <p>Loading...</p>;
+    return <ProjectFormSkeleton />;
   }
 
   assertExists(project);
@@ -28,8 +29,11 @@ export default function EditProjectPage() {
           title="Edit Project"
           description="Update project details."
         />
-
-        <ProjectForm mode="edit" project={project} />
+        {project === undefined ? (
+          <ProjectFormSkeleton />
+        ) : (
+          <ProjectForm mode="edit" project={project} />
+        )}
       </div>
     </PageContainer>
   );
