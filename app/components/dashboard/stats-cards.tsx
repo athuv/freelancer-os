@@ -1,52 +1,61 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/app/components/shadcn/card';
+type Props = {
+  stats: {
+    totalProjects: number;
+    activeProjects: number;
+    completedProjects: number;
+    totalClients: number;
+    totalTasks: number;
+    completedTasks: number;
+    completionRate: number;
+  };
+};
 
-import { getDashboardStats } from '@/lib/data/dashboard';
+import StatCard from './stat-card';
 
-export default async function StatsCards() {
-  const stats = await getDashboardStats();
-
+export default function StatsCards({ stats }: Props) {
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-      <Card>
-        <CardHeader>
-          <CardTitle>Total Projects</CardTitle>
-        </CardHeader>
-        <CardContent className="text-2xl font-semibold">
-          {stats.totalProjects}
-        </CardContent>
-      </Card>
+      <StatCard
+        title="Total Projects"
+        value={String(stats.totalProjects)}
+        icon={null}
+      />
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Completed</CardTitle>
-        </CardHeader>
-        <CardContent className="text-2xl font-semibold">
-          {stats.completedProjects}
-        </CardContent>
-      </Card>
+      <StatCard
+        title="In Progress"
+        value={String(stats.activeProjects)}
+        icon={null}
+      />
 
-      <Card>
-        <CardHeader>
-          <CardTitle>In Progress</CardTitle>
-        </CardHeader>
-        <CardContent className="text-2xl font-semibold">
-          {stats.inProgressProjects}
-        </CardContent>
-      </Card>
+      <StatCard
+        title="Completed Projects"
+        value={String(stats.completedProjects)}
+        icon={null}
+      />
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Clients</CardTitle>
-        </CardHeader>
-        <CardContent className="text-2xl font-semibold">
-          {stats.totalClients}
-        </CardContent>
-      </Card>
+      <StatCard
+        title="Clients"
+        value={String(stats.totalClients)}
+        icon={null}
+      />
+
+      <StatCard
+        title="Total Tasks"
+        value={String(stats.totalTasks)}
+        icon={null}
+      />
+
+      <StatCard
+        title="Completed Tasks"
+        value={String(stats.completedTasks)}
+        icon={null}
+      />
+
+      <StatCard
+        title="Completion Rate"
+        value={`${stats.completionRate.toFixed(2)}%`}
+        icon={null}
+      />
     </div>
   );
 }
