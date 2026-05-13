@@ -9,6 +9,7 @@
  */
 
 import type * as clients from "../clients.js";
+import type * as dashboard from "../dashboard.js";
 import type * as projects from "../projects.js";
 import type * as schemaHelpers from "../schemaHelpers.js";
 import type * as tasks from "../tasks.js";
@@ -21,6 +22,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   clients: typeof clients;
+  dashboard: typeof dashboard;
   projects: typeof projects;
   schemaHelpers: typeof schemaHelpers;
   tasks: typeof tasks;
