@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/app/components/shadcn/button';
 import { Input } from '@/app/components/shadcn/input';
@@ -14,13 +15,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/app/components/shadcn/select';
+
 import { projectSchema } from '@/lib/validation/project-schema';
 import type { ProjectStatus } from '@/types/project';
-import { useRouter } from 'next/navigation';
-import { ProjectFormProps } from '@/types/project-form';
+import type { ProjectFormProps } from '@/types/project-form';
 
 import { useMutation, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
+import { Id } from '@/convex/_generated/dataModel';
 
 export default function ProjectForm({
   mode = 'create',
@@ -30,7 +32,7 @@ export default function ProjectForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [name, setName] = useState(project?.name ?? '');
-  const [client, setClient] = useState(project?.client ?? '');
+  const [clientId, setClientId] = useState(project?.clientId ?? '');
   const [status, setStatus] = useState<ProjectStatus>(
     project?.status ?? 'planned',
   );
@@ -42,12 +44,11 @@ export default function ProjectForm({
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
     setIsSubmitting(true);
 
     const result = projectSchema.safeParse({
       name,
-      client,
+      clientId,
       status,
       description,
     });
@@ -61,14 +62,17 @@ export default function ProjectForm({
       if (mode === 'edit' && project) {
         await updateProject({
           id: project._id,
-          ...result.data,
+          name: result.data.name,
+          clientId: result.data.clientId as Id<'clients'>,
+          status: result.data.status,
+          description: result.data.description,
         });
 
         router.push(`/projects/${project._id}`);
       } else {
         await createProject({
           name: result.data.name,
-          client: result.data.client,
+          clientId: result.data.clientId as Id<'clients'>,
           status: result.data.status,
           description: result.data.description,
         });
@@ -82,34 +86,32 @@ export default function ProjectForm({
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
+      {/* NAME */}
       <div className="space-y-2">
         <Label htmlFor="name">Project Name</Label>
-
         <Input
           id="name"
-          placeholder="Enter project name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
       </div>
 
+      {/* CLIENT */}
       <div className="space-y-2">
         <Label htmlFor="client">Client</Label>
 
-        <Select disabled={!clients} value={client} onValueChange={setClient}>
+        <Select
+          value={clientId}
+          onValueChange={(value) => setClientId(value as Id<'clients'>)}
+          disabled={!clients}
+        >
           <SelectTrigger>
             <SelectValue placeholder="Select a client" />
           </SelectTrigger>
 
           <SelectContent>
-            {clients?.length === 0 && (
-              <SelectItem value="none" disabled>
-                No clients found
-              </SelectItem>
-            )}
-
             {clients?.map((client) => (
-              <SelectItem key={client._id} value={client.name}>
+              <SelectItem key={client._id} value={client._id}>
                 {client.name}
               </SelectItem>
             ))}
@@ -117,12 +119,13 @@ export default function ProjectForm({
         </Select>
       </div>
 
+      {/* STATUS */}
       <div className="space-y-2">
         <Label>Status</Label>
 
         <Select
           value={status}
-          onValueChange={(value) => setStatus(value as ProjectStatus)}
+          onValueChange={(v) => setStatus(v as ProjectStatus)}
         >
           <SelectTrigger>
             <SelectValue />
@@ -136,24 +139,24 @@ export default function ProjectForm({
         </Select>
       </div>
 
+      {/* DESCRIPTION */}
       <div className="space-y-2">
-        <Label htmlFor="description">Description</Label>
+        <Label>Description</Label>
 
         <Textarea
-          id="description"
-          placeholder="Describe the project..."
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
 
+      {/* ACTIONS */}
       <div className="flex items-center gap-3">
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting
             ? 'Saving...'
             : mode === 'edit'
               ? 'Update Project'
-              : 'Save Project'}
+              : 'Create Project'}
         </Button>
 
         <Button type="button" variant="outline" asChild>
