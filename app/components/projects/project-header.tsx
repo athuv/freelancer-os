@@ -10,7 +10,9 @@ export default function ProjectHeader({ project }: { project: Project }) {
         <div>
           <h1 className="text-2xl font-semibold">{project.name}</h1>
 
-          <p className="text-muted-foreground text-sm">{project.client}</p>
+          <p className="text-muted-foreground text-sm">
+            {project.client?.name}
+          </p>
         </div>
 
         <div className="flex items-center gap-2">
