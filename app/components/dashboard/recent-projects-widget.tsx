@@ -18,7 +18,9 @@ export default function RecentProjectsWidget({ projects }: Props) {
         >
           <div>
             <p className="font-medium">{project.name}</p>
-            <p className="text-muted-foreground text-sm">{project.client}</p>
+            <p className="text-muted-foreground text-sm">
+              {project.client?.name || 'Client not specified'}
+            </p>
           </div>
 
           <Badge variant={getStatusVariant(project.status)}>
