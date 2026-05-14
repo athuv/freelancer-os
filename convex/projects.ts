@@ -6,7 +6,17 @@ import { ProjectStatus } from './schemaHelpers';
 export const getProjects = query({
   args: {},
   handler: async (ctx) => {
-    return await ctx.db.query('projects').collect();
+    const projects = await ctx.db.query('projects').collect();
+
+    return await Promise.all(
+      projects.map(async (project) => {
+        const client = await ctx.db.get(project.clientId);
+        return {
+          ...project,
+          client,
+        };
+      }),
+    );
   },
 });
 
@@ -25,7 +35,7 @@ export const getProjectById = query({
 export const createProject = mutation({
   args: {
     name: v.string(),
-    client: v.string(),
+    clientId: v.id('clients'),
     status: ProjectStatus,
     description: v.optional(v.string()),
   },
@@ -40,7 +50,7 @@ export const updateProject = mutation({
   args: {
     id: v.id('projects'),
     name: v.string(),
-    client: v.string(),
+    clientId: v.id('clients'),
     status: ProjectStatus,
     description: v.optional(v.string()),
   },
