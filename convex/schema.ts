@@ -4,7 +4,7 @@ import { v } from 'convex/values';
 export default defineSchema({
   projects: defineTable({
     name: v.string(),
-    client: v.string(),
+    clientId: v.id('clients'),
     status: v.union(
       v.literal('planned'),
       v.literal('in-progress'),
