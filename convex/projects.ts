@@ -27,7 +27,11 @@ export const getProjectById = query({
   },
 
   handler: async (ctx, args) => {
-    return await ctx.db.get(args.id);
+    const project = await ctx.db.get(args.id);
+    if (!project) return null;
+
+    const client = await ctx.db.get(project.clientId);
+    return { ...project, client };
   },
 });
 
