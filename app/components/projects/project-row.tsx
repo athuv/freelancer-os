@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import DeleteClientButton from '@/app/components/clients/delete-client-button';
 import { Button } from '@/app/components/shadcn/button';
 import { Project } from '@/types/project';
 import { Badge } from '@/app/components/shadcn/badge';
@@ -15,13 +14,13 @@ export default function ProjectRow({ project }: Props) {
     <div className="hover:bg-muted/50 flex items-center justify-between rounded-xl border px-4 py-3 transition">
       <div className="space-y-0.5">
         <Link
-          href={`/clients/${project._id}`}
+          href={`/projects/${project._id}`}
           className="font-medium hover:underline"
         >
           {project.name}
         </Link>
 
-        <p className="text-muted-foreground text-sm">{project.client}</p>
+        <p className="text-muted-foreground text-sm">{project.client?.name}</p>
       </div>
 
       <div className="flex items-center gap-3">
